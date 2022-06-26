@@ -1,9 +1,1 @@
-{
-  "09122007630":{
-    "name": "Sri. K.R. Murthy",
-    "address": "No.1, 1st Cross, 1st Main, 1st Street, Kengeri, Bangalore-560077",
-    "email": "abi@blue.com",
-    "password": "Sadra1382"
-  }
-}
-
+{"users":{"09122007644":{"phoneNumber":"09122007644","password":"Sadra1382","username":"sadra","email":"","storeAddress":""},"09122007645":{"phoneNumber":"09122007645","password":"Sadra","username":"Sadra1382","email":"","storeAddress":""},"09122007450":{"phoneNumber":"09122007450","password":"sadra","username":"Sadra1382","email":"","storeAddress":""},"09124934521":{"phoneNumber":"09124934521","password":"Sadra","username":"Sadra1382","email":"","storeAddress":""},"09134004521":{"phoneNumber":"09134004521","password":"Mehrad","username":"Sadra1382","email":"","storeAddress":""}}}
