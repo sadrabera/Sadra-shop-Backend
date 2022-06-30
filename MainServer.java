@@ -7,13 +7,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
-import org.json.simple.JSONObject;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
-import org.json.simple.JSONArray;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 public class MainServer {
 
@@ -29,16 +22,29 @@ public class MainServer {
         Gson gson=new Gson();
         AllUsers allUsers = null;
         AllGoods allGoods = null;
-
-        try(FileReader reader=new FileReader("src/Data/users.json");FileReader reader2=new FileReader("src/Data/goods.json")){
+        try(FileReader reader=new FileReader("src/Data/users.json")){
                 allUsers = gson.fromJson(reader, AllUsers.class);
-                allGoods = gson.fromJson(reader2, AllGoods.class);
+            if (allUsers==null){
+                allUsers=new AllUsers();
+            }
         } catch (IOException e) {
             logger.log(Level.WARNING, Arrays.toString(e.getStackTrace()));
         }catch (NullPointerException e){
             logger.log(Level.FINE, Arrays.toString(e.getStackTrace()));
-            allGoods=new AllGoods();
+            allUsers=new AllUsers();
         }
+        try(FileReader reader=new FileReader("src/Data/goods.json")){
+            allGoods = gson.fromJson(reader, AllGoods.class);
+            if (allGoods==null){
+                allGoods=new AllGoods();
+            }
+        } catch (IOException e) {
+            logger.log(Level.WARNING, Arrays.toString(e.getStackTrace()));
+        }catch (NullPointerException e){
+            logger.log(Level.FINE, Arrays.toString(e.getStackTrace()));
+            allGoods = new AllGoods();
+        }
+
         AllUsers finalAllUsers = allUsers;
         AllGoods finalAllGoods = allGoods;
         Runtime.getRuntime().addShutdownHook((new Thread(()->{
@@ -49,6 +55,7 @@ public class MainServer {
                 logger.log(Level.WARNING, Arrays.toString(e.getStackTrace()));
             }
         })));
+//        allUsers.users.get("09122007644").cartGoods.goods.put(allGoods.goods.get("Lenovo").title,allGoods.goods.get("Lenovo"));
 
         while(true){
             try {
@@ -56,7 +63,7 @@ public class MainServer {
                 assert serverSocket != null;
                 Socket anotherClientSocket=serverSocket.accept();
                 System.out.println("accepted");
-                new Thread(new SideServerThread(anotherClientSocket,allUsers)).start();  //Creating another thread for each client
+                new Thread(new SideServerThread(anotherClientSocket,allUsers,allGoods)).start();  //Creating another thread for each client
 
             } catch (IOException e) {
                 logger.log(Level.WARNING, Arrays.toString(e.getStackTrace()));

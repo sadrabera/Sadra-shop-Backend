@@ -1,13 +1,20 @@
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class UsersClass {
+public class UsersClass implements Serializable {
     public String phoneNumber;
     public String password;
     public String username;
     public String email;
-    public String address;
+    public List<String> address=new ArrayList<>();
     public String storeAddress;
+    public AllGoods likedGoods=new AllGoods();
+    public AllGoods completedOrders=new AllGoods();
+    public AllGoods ownedGoods=new AllGoods();
+    public AllGoods cartGoods=new AllGoods();
 
     public UsersClass(String phoneNumber, String username, String password, String email, String storeAddress) {
         this.phoneNumber = phoneNumber;
@@ -26,6 +33,15 @@ public class UsersClass {
                 ", address='" + address + '\'' +
                 ", storeAddress='" + storeAddress + '\'' +
                 '}';
+    }
+    public void addLikedGoods(Good good){
+        likedGoods.goods.put(good.title,good);
+    }
+    public void addCompletedOrders(Good good){
+        completedOrders.goods.put(good.title,good);
+    }
+    public void addOwnedGoods(Good good){
+        ownedGoods.goods.put(good.title,good);
     }
     public String getPhoneNumber() {
         return phoneNumber;
@@ -54,20 +70,8 @@ public class UsersClass {
     public String getEmail() {
         return email;
     }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 }
-class AllUsers{
+class AllUsers implements Serializable {
     public  Map<String,UsersClass> users=new HashMap<>();
 
     public synchronized void addUser(UsersClass user){
